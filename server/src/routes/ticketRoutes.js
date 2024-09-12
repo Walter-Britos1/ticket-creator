@@ -1,11 +1,9 @@
 import Route from 'express';
-import createTicketHandler from '../handlers/ticketHandler.js';
+import { createTicketHandler, getAllTicketsHandler } from '../handlers/ticketHandler.js';
 
 const ticketRoute = Route();
 
-ticketRoute.get('/tickets', (req, res) => {
-  res.send('esta ruta mostrara la lista de tickets');
-});
+ticketRoute.get('/tickets', getAllTicketsHandler);
 
 ticketRoute.post('/ticket', createTicketHandler);
 
