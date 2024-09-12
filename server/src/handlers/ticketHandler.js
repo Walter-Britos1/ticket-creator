@@ -1,6 +1,6 @@
-import createTicketController from '../controllers/ticketController.js';
+import { createTicketController, getAllTicketsController } from '../controllers/ticketController.js';
 
-const createTicketHandler = async (req, res) => {
+export const createTicketHandler = async (req, res) => {
   const { name, description, difficulty, status, gifUrl, createdAt } = req.body;
 
   try {
@@ -19,4 +19,12 @@ const createTicketHandler = async (req, res) => {
   }
 };
 
-export default createTicketHandler;
+export const getAllTicketsHandler = async (req, res) => {
+  try {
+    const allTickets = await getAllTicketsController();
+    res.json(allTickets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
