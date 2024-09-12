@@ -1,6 +1,6 @@
 import { Ticket } from '../models/Ticket.js';
 
-const createTicketController = async (
+export const createTicketController = async (
   name,
   description,
   difficulty,
@@ -20,4 +20,8 @@ const createTicketController = async (
   return ticketCreated;
 };
 
-export default createTicketController;
+export const getAllTicketsController = async () => {
+  const allTickets = await Ticket.findAll();
+
+  return allTickets;
+};
