@@ -6,7 +6,7 @@ export const createTicketController = async (
   difficulty,
   status,
   gifUrl,
-  createdAt,
+  createdAt
 ) => {
   const ticketCreated = await Ticket.create({
     name,
@@ -25,3 +25,13 @@ export const getAllTicketsController = async () => {
 
   return allTickets;
 };
+
+export const updateTicketController = async (id, updates) => {
+  const ticket = await Ticket.findByPk(id);
+  if (!ticket) {
+    throw new Error('Ticket not found');
+  }
+  await ticket.update(updates);
+
+  return ticket;
+}
