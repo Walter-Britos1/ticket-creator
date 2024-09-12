@@ -8,6 +8,9 @@ export const createTicketController = async (
   gifUrl,
   createdAt
 ) => {
+  if (!name || !description || !difficulty || !status || !gifUrl || !createdAt)
+    throw new Error('All fields are required');
+
   const ticketCreated = await Ticket.create({
     name,
     description,
@@ -43,7 +46,7 @@ export const deletedTicketController = async (id) => {
 
   const deletedTicket = await Ticket.destroy({
     where: {
-      id
+      id,
     },
   });
 
