@@ -34,4 +34,18 @@ export const updateTicketController = async (id, updates) => {
   await ticket.update(updates);
 
   return ticket;
-}
+};
+
+export const deletedTicketController = async (id) => {
+  if (!id) {
+    throw new Error('Failed to delete ticket');
+  }
+
+  const deletedTicket = await Ticket.destroy({
+    where: {
+      id
+    },
+  });
+
+  return deletedTicket;
+};
