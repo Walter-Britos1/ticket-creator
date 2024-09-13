@@ -1,4 +1,6 @@
 import { Ticket } from '../models/Ticket.js';
+import { BadRequestError, NotFoundError } from '../errors/customError.js';
+import { validateRequiredFields } from '../utils/validateFields.js';
 
 export const createTicketController = async (
   name,
@@ -8,8 +10,21 @@ export const createTicketController = async (
   gifUrl,
   createdAt
 ) => {
-  if (!name || !description || !difficulty || !status || !gifUrl || !createdAt)
-    throw new Error('All fields are required');
+  const requiredFields = [
+    'name',
+    'description',
+    'difficulty',
+    'status',
+  ];
+
+  validateRequiredFields(requiredFields, {
+    name,
+    description,
+    difficulty,
+    status,
+    gifUrl,
+    createdAt,
+  });
 
   const ticketCreated = await Ticket.create({
     name,
@@ -30,25 +45,39 @@ export const getAllTicketsController = async () => {
 };
 
 export const updateTicketController = async (id, updates) => {
+  if (!id) {
+    throw new BadRequestError('The "id" field is required');
+  }
+
   const ticket = await Ticket.findByPk(id);
   if (!ticket) {
     throw new Error('Ticket not found');
   }
+
+  const updatableFields = [
+    'name',
+    'description',
+    'difficulty',
+    'status'
+  ];
+  
+  validateRequiredFields(updatableFields, updates);
+
   await ticket.update(updates);
 
   return ticket;
 };
 
-export const deletedTicketController = async (id) => {
+export const deleteTicketController = async (id) => {
   if (!id) {
-    throw new Error('Failed to delete ticket');
+    throw new BadRequestError('The "id" field is required');
   }
 
-  const deletedTicket = await Ticket.destroy({
-    where: {
-      id,
-    },
-  });
+  const deletedTicket = await Ticket.destroy({ where: { id } });
+
+  if (deletedTicket === 0) {
+    throw new NotFoundError('Ticket not found');
+  }
 
   return deletedTicket;
 };
