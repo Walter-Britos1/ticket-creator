@@ -8,7 +8,7 @@ const useModal = () => {
     setIsModalOpen(true);
     setTimeout(() => {
       setShowModalContent(true);
-    }, 300)
+    }, 250)
   };
 
   const closeModal = () => {
