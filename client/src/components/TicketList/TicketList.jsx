@@ -1,8 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import TicketItem from '@/components/TicketItem/TicketItem';
+import useTickets from '../../hooks/useTickets';
 
 export default function TicketList() {
-  const tickets = useSelector( state => state.tickets.tickets)
+  const { handlerAllTickets, tickets } = useTickets();
+
+  useEffect(() => {handlerAllTickets()}, []);
 
   return (
     <div className='p-4 relative'>
