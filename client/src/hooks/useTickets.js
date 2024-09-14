@@ -2,8 +2,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import { setAllTicket } from '@/redux/sliceTicket';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_ALL_TICKETS_ENDPOINT, CREATE_TICKET_ENDPOINT } from '@/config/api';
-import closeModel from '@/hooks/useModal'
+import {
+  GET_ALL_TICKETS_ENDPOINT,
+  CREATE_TICKET_ENDPOINT,
+  DELETE_TICKET_ENDPOINT,
+} from '@/config/api';
+import closeModel from '@/hooks/useModal';
 
 const useTickets = () => {
   const dispatch = useDispatch();
@@ -27,7 +31,6 @@ const useTickets = () => {
     }
   };
 
-
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -49,16 +52,26 @@ const useTickets = () => {
     event.preventDefault();
     await handlerCreateTicket(formData);
     setFormData({ name: '', description: '', difficulty: '', status: '' });
-    closeModel()
+    closeModel();
   };
 
-  return { 
-    tickets, 
+  const handlerDeleteTicket = async (id) => {
+    try {
+      await axios.delete(`${DELETE_TICKET_ENDPOINT}${id}`);
+      dispatch(setAllTicket(tickets.filter((ticket) => ticket.id !== id)));
+    } catch (error) {
+      console.error('Error deleting ticket:', error);
+    }
+  };
+
+  return {
+    tickets,
     formData,
     handleChange,
     handleSubmit,
-    handlerAllTickets, 
-    handlerCreateTicket 
+    handlerAllTickets,
+    handlerCreateTicket,
+    handlerDeleteTicket,
   };
 };
 
