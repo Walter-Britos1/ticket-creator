@@ -18,10 +18,10 @@ class NotFoundError extends CustomError {
   }
 }
 
-class InteralServerError extends CustomError {
+class InternalServerError extends CustomError {
   constructor(message = 'Internal Server Error') {
     super(message, 500);
   }
 }
 
-export { BadRequestError, NotFoundError, InteralServerError };
+export { BadRequestError, NotFoundError, InternalServerError };
