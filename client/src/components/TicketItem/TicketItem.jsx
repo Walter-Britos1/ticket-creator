@@ -1,4 +1,4 @@
-
+import { Trash2 } from 'lucide-react';
 export default function TicketItem({ id, name, description, difficulty, status, gifUrl, createdAt, isNew }) {
   return (
     <div
@@ -11,6 +11,9 @@ export default function TicketItem({ id, name, description, difficulty, status, 
       <p className='text-sm text-gray-500'>Status:  <span className={`font-semibold ${status === 'resolved' ? 'text-green-500' : 'text-yellow-500'}`}>{status}</span></p>
       <p className='text-sm text-gray-500'>Created At: {new Date(createdAt).toLocaleString()}</p>
       {gifUrl && <img src={gifUrl} alt='Ticket GIF' className='mt-4 rounded-lg' />}
+      <button>
+        <Trash2 className='text-red-500' />
+      </button>
     </div>
   );
 }
