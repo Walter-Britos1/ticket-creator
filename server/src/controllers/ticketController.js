@@ -1,6 +1,7 @@
 import { Ticket } from '../models/Ticket.js';
 import { BadRequestError, NotFoundError } from '../errors/customError.js';
 import { validateRequiredFields } from '../utils/validateFields.js';
+import { getGifUrlByDifficulty } from '../services/giphyService.js'
 
 export const createTicketController = async (
   name,
@@ -8,7 +9,6 @@ export const createTicketController = async (
   difficulty,
   status,
   gifUrl,
-  createdAt
 ) => {
   const requiredFields = [
     'name',
@@ -23,7 +23,6 @@ export const createTicketController = async (
     difficulty,
     status,
     gifUrl,
-    createdAt,
   });
 
   const ticketCreated = await Ticket.create({
@@ -31,8 +30,7 @@ export const createTicketController = async (
     description,
     difficulty,
     status,
-    gifUrl,
-    createdAt,
+    gifUrl: await getGifUrlByDifficulty(difficulty),
   });
 
   return ticketCreated;
@@ -54,14 +52,9 @@ export const updateTicketController = async (id, updates) => {
     throw new Error('Ticket not found');
   }
 
-  const updatableFields = [
-    'name',
-    'description',
-    'difficulty',
-    'status'
-  ];
-  
-  validateRequiredFields(updatableFields, updates);
+   if (updates.difficulty) {
+    updates.gifUrl = await getGifUrlByDifficulty(updates.difficulty);
+  }
 
   await ticket.update(updates);
 

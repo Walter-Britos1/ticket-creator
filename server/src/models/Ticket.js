@@ -26,9 +26,8 @@ export const Ticket = sequelize.define('Ticket', {
   },
   gifUrl: {
     type: DataTypes.STRING,
-    // allowNull: true
+    allowNull: true,
   },
-  createdAt: {
-    type: DataTypes.STRING,
-  }
+}, {
+  timestamps: true,  
 });

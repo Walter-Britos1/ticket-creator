@@ -6,17 +6,10 @@ import {
 } from '../controllers/ticketController.js';
 
 export const createTicketHandler = async (req, res) => {
-  const { name, description, difficulty, status, gifUrl, createdAt } = req.body;
+  const { name, description, difficulty, status } = req.body;
 
   try {
-    const newTicket = await createTicketController(
-      name,
-      description,
-      difficulty,
-      status,
-      gifUrl,
-      createdAt
-    );
+    const newTicket = await createTicketController(name, description, difficulty, status);
     res.status(201).send(newTicket);
   } catch (error) {
     console.error(error);
