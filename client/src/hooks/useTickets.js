@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllTicket } from '@/redux/sliceTicket';
 import { getFilters } from '@/redux/sliceFilters';
 import {
   GET_ALL_TICKETS_ENDPOINT,
   CREATE_TICKET_ENDPOINT,
-  DELETE_TICKET_ENDPOINT,
+  UPDATE_TICKET_ENDPOINT,
+  DELETE_TICKET_ENDPOINT
 } from '@/config/api';
 import closeModel from '@/hooks/useModal';
 
@@ -18,7 +19,8 @@ const useTickets = () => {
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [noResults, setNoResults] = useState(false); 
 
-  const applyFilters = (tickets) => {
+  // Memoizar applyFilters para evitar cambios innecesarios
+  const applyFilters = useCallback((tickets) => {
     let filtered = [...tickets];
 
     // Aplica los filtros
@@ -53,9 +55,10 @@ const useTickets = () => {
 
     setFilteredTickets(filtered);
     setNoResults(filtered.length === 0); 
-  };
+  }, [filters]);
 
-  const handlerAllTickets = async () => {
+  // Memoizar handlerAllTickets para evitar recreaciones innecesarias
+  const handlerAllTickets = useCallback(async () => {
     try {
       const { data } = await axios.get(GET_ALL_TICKETS_ENDPOINT);
       dispatch(setAllTicket(data));
@@ -63,7 +66,7 @@ const useTickets = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [dispatch, applyFilters]);
 
   const handlerCreateTicket = async (formData) => {
     try {
@@ -100,6 +103,20 @@ const useTickets = () => {
     closeModel();
   };
 
+  const handlerUpdateTicket = async (id, updatedData) => {
+    try {
+      const { data } = await axios.put(`${UPDATE_TICKET_ENDPOINT}${id}`, updatedData);
+  
+      const updatedTickets = tickets.map(ticket =>
+        ticket.id === id ? { ...ticket, ...data } : ticket
+      );
+      dispatch(setAllTicket(updatedTickets));
+    } catch (error) {
+      console.error('Error updating ticket:', error);
+    }
+  };
+  
+
   const handlerDeleteTicket = async (id) => {
     try {
       await axios.delete(`${DELETE_TICKET_ENDPOINT}${id}`);
@@ -113,7 +130,7 @@ const useTickets = () => {
 
   useEffect(() => {
     applyFilters(tickets); 
-  }, [tickets, filters]);
+  }, [tickets, filters, applyFilters]);
 
   return {
     tickets: filteredTickets, 
@@ -122,8 +139,9 @@ const useTickets = () => {
     handleSubmit,
     handlerAllTickets,
     handlerCreateTicket,
+    handlerUpdateTicket,
     handlerDeleteTicket,
-    noResults 
+    noResults
   };
 };
 
