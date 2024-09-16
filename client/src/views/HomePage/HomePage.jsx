@@ -1,30 +1,34 @@
 import TicketList from '@/components/TicketList/TicketList';
 import TicketForm from '@/components/TicketForm/TicketForm';
 import useModal from '@/hooks/useModal';
+import FiltersMenu from '@/components/FiltersMenu/FiltersMenu';
 
 export default function HomePage() {
   const { isModalOpen, openModal, showModalContent, closeModal, handleOutsideClick } = useModal();
 
   return (
     <div className='p-6 bg-gray-100 min-h-screen relative'>
-      <h1 className='text-3xl font-bold mb-6'>Tickets Creator</h1>
-      <button
-        className='absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition'
-        onClick={openModal}
-      >
-        New Ticket
-      </button>
+      <div className='flex items-center justify-between mb-6'>
+        <FiltersMenu />
+        <h1 className='text-3xl font-bold text-center flex-grow ml-8'>Tickets Creator</h1>
+        <button
+          className='bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition'
+          onClick={openModal}
+        >
+          New Ticket
+        </button>
+      </div>
       <TicketList />
       {isModalOpen && (
         <div
-          id='modalBackground' // Asignamos un ID al fondo del modal
+          id='modalBackground'
           className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity duration-300'
-          onClick={handleOutsideClick} // Manejador para detectar clic fuera del contenido
+          onClick={handleOutsideClick}
         >
           <div
             className={`bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative transform transition-all duration-300 ease-in-out ${showModalContent ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
               }`}
-            onClick={(event) => event.stopPropagation()} // Evita que el clic en el contenido cierre el modal
+            onClick={(event) => event.stopPropagation()}
           >
             <button
               className='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
