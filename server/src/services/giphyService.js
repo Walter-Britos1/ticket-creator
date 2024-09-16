@@ -7,8 +7,8 @@ const GIPHY_BASE_URL = 'https://api.giphy.com/v1/gifs/search';
 const GIPHY_API_KEY = process.env.GIPHY_API_KEY;
 
 const searchTerms = {
-  'easy': 'happy',
-  'intermediate': 'excited',
+  'easy': 'happy SpongeBob',
+  'intermediate': 'Focused SpongeBob',
   'hard': 'angry SpongeBob',
 };
 
