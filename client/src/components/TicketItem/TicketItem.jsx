@@ -10,7 +10,12 @@ export default function TicketItem({ id, name, description, difficulty, status, 
       <p className='text-sm text-gray-500'>Difficulty: <span className={`font-semibold ${difficulty === 'hard' ? 'text-red-500' : 'text-yellow-500'}`}>{difficulty}</span></p>
       <p className='text-sm text-gray-500'>Status:  <span className={`font-semibold ${status === 'resolved' ? 'text-green-500' : 'text-yellow-500'}`}>{status}</span></p>
       <p className='text-sm text-gray-500'>Created At: {new Date(createdAt).toLocaleString()}</p>
-      {gifUrl && <img src={gifUrl} alt='Ticket GIF' className='mt-4 rounded-lg' />}
+      {gifUrl && (
+        <div className='flex justify-center items-center overflow-hidden h-48 w-full mt-4'>
+          <img src={gifUrl} alt='Ticket GIF' className='w-full h-full object-cover rounded-lg' />
+        </div>
+      )}
+
       <DeleteButton id={id} />
     </div>
   );
