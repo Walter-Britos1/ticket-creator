@@ -36,7 +36,7 @@ export default function HomePage() {
             >
               X
             </button>
-            <TicketForm />
+             <TicketForm />
           </div>
         </div>
       )}
