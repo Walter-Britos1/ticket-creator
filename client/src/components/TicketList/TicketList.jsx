@@ -6,8 +6,8 @@ export default function TicketList() {
   const { handlerAllTickets, tickets, noResults } = useTickets();
 
   useEffect(() => {
-    handlerAllTickets();
-  }, [handlerAllTickets]);
+    handlerAllTickets(); 
+  }, [handlerAllTickets]); 
 
   return (
     <div className='p-4'>
