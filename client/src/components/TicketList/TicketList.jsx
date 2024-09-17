@@ -13,7 +13,7 @@ export default function TicketList() {
     <div className='p-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center'>
         {noResults ? (
-          <p className='text-gray-500 text-center col-span-full text-xl font-semibold'>No tickets found with the applied filters.</p>
+          <p className='text-gray-500 text-center col-span-full text-xl font-semibold'>No tickets found</p>
         ) : (
           tickets.map((item) => (
             <TicketItem
