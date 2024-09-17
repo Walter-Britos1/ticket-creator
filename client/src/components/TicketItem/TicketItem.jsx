@@ -5,7 +5,7 @@ import { SquarePen } from 'lucide-react';
 import Modal from '@/components/Modal/Modal';
 import { formatDateTime } from '@/utils/formatDataTime';
 
-export default function TicketItem({ id, name, description, difficulty, status, gifUrl, createdAt, isNew }) {
+export default function TicketItem({ id, name, description, difficulty, status, gifUrl, createdAt }) {
   const [isEditing, setIsEditing] = useState(false);
   const { dateStringFormatted, timeStringFormatted } = formatDateTime(createdAt);
 
@@ -15,19 +15,21 @@ export default function TicketItem({ id, name, description, difficulty, status, 
 
   return (
     <div
-      className={`bg-white shadow-md rounded-lg p-6 max-w-sm relative transform transition-all duration-500 ${isNew ? 'scale-95 hover:scale-105' : 'scale-100'}`}
+      className={'bg-white shadow-md rounded-lg p-6 max-w-sm relative transition-all duration-500'}
     >
-      <h2 className='text-xl font-bold mb-2'>{name}</h2>
-      <p className='text-gray-700 mb-4'>{description}</p>
-      <p className='text-sm text-gray-500'>
-        Difficulty: <span className={`font-semibold ${difficulty === 'hard' ? 'text-[#EF4444]' : difficulty === 'intermediate' ? 'text-[#F59E0B]' : 'text-[#10B981]'}`}>{difficulty}</span>
-      </p>
-      <p className='text-sm text-gray-500'>
-        Status: <span className={`font-semibold ${status === 'resolved' ? 'text-green-500' : 'text-yellow-500'}`}>{status}</span>
-      </p>
-      <p className='text-sm text-gray-500'>
-        Created At: {dateStringFormatted} Hrs: {timeStringFormatted}
-      </p>
+      <div className='flex flex-col'>
+        <h2 className='text-xl font-bold mb-2 break-words'>{name}</h2>
+        <p className='text-gray-700 mb-4'>{description}</p>
+        <p className='text-sm text-gray-500'>
+          Difficulty: <span className={`font-semibold ${difficulty === 'hard' ? 'text-[#EF4444]' : difficulty === 'intermediate' ? 'text-[#F59E0B]' : 'text-[#10B981]'}`}>{difficulty}</span>
+        </p>
+        <p className='text-sm text-gray-500'>
+          Status: <span className={`font-semibold ${status === 'resolved' ? 'text-green-500' : 'text-yellow-500'}`}>{status}</span>
+        </p>
+        <p className='text-sm text-gray-500'>
+          Created At: {dateStringFormatted} Hrs: {timeStringFormatted}
+        </p>
+      </div>
 
       {gifUrl && (
         <div className='flex justify-center items-center overflow-hidden h-48 w-full mt-4'>
@@ -35,7 +37,7 @@ export default function TicketItem({ id, name, description, difficulty, status, 
         </div>
       )}
 
-      <div className='absolute top-2 right-2 flex space-x-2'>
+      <div className='absolute top-2 right-2 flex flex-col space-y-2'>
         <button
           onClick={toggleEdit}
           className='p-2 rounded bg-gray-200 hover:bg-gray-300'
@@ -43,6 +45,9 @@ export default function TicketItem({ id, name, description, difficulty, status, 
         >
           <SquarePen size={20} />
         </button>
+      </div>
+      
+      <div className='absolute bottom-2 right-2'>
         <DeleteButton id={id} />
       </div>
 

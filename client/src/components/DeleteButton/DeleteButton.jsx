@@ -7,9 +7,9 @@ export default function DeleteButton({ id }) {
   return (
     <button
       onClick={() => handlerDeleteTicket(id)}
-      className='p-2 rounded bg-red-200 hover:bg-red-300'
+      className='p-1 rounded bg-red-200 hover:bg-red-300'
     >
-      <Trash className='inline-block w-6 h-6' />
+      <Trash size={15} className='inline-block w-6 h-6' />
     </button>
   );
 }
