@@ -13,6 +13,7 @@ import closeModel from '@/hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '@/utils/validation';
+import { toast } from 'react-toastify';
 
 const useTickets = () => {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const useTickets = () => {
       const updatedTickets = [...tickets, data];
       dispatch(setAllTicket(updatedTickets));
       applyFilters(updatedTickets);
+      toast.success('Ticket created successfully')
       reset();
       closeModel();
     } catch (error) {
@@ -116,6 +118,7 @@ const useTickets = () => {
         ticket.id === id ? { ...ticket, ...data } : ticket
       );
       dispatch(setAllTicket(updatedTickets));
+      toast.success('Ticket updated successfully');
     } catch (error) {
       console.error('Error updating ticket:', error);
     }
@@ -127,6 +130,7 @@ const useTickets = () => {
       const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
       dispatch(setAllTicket(updatedTickets));
       applyFilters(updatedTickets);
+      toast.success('Ticket deleted successfully');
     } catch (error) {
       console.error('Error deleting ticket:', error);
     }
