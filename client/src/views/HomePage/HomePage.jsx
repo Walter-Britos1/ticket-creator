@@ -7,16 +7,17 @@ export default function HomePage() {
   const { isModalOpen, openModal, showModalContent, closeModal, handleOutsideClick } = useModal();
 
   return (
-    <div className='p-6 bg-gray-100 min-h-screen relative'>
+    <div className='p-6 bg-[#F7F7F7] min-h-screen relative'>
       <div className='flex items-center justify-between mb-6'>
         <FiltersMenu />
         <h1 className='text-3xl font-bold text-center flex-grow ml-8'>Tickets Creator</h1>
         <button
-          className='bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition'
+          className='bg-[#3B82F6] text-white px-4 py-2 rounded-lg shadow hover:bg-[#2563EB] transition'
           onClick={openModal}
         >
           New Ticket
         </button>
+
       </div>
       <TicketList />
       {isModalOpen && (
@@ -36,7 +37,7 @@ export default function HomePage() {
             >
               X
             </button>
-             <TicketForm />
+            <TicketForm />
           </div>
         </div>
       )}

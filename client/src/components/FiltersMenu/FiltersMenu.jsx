@@ -11,16 +11,16 @@ export default function FiltersMenu() {
     handleStatusChange,
     handleDifficultyChange,
     handleCreatedTimeChange,
-    applyFilters 
+    applyFilters
   } = useFilters();
 
   const handleApplyFilters = () => {
-    applyFilters(); 
-    setMenuOpen(false); 
+    applyFilters();
+    setMenuOpen(false);
   };
 
   return (
-    <div> 
+    <div>
       <button
         className={`absolute top-7 left-4 z-20 text-sm font-medium transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-[250px]' : 'translate-x-0'}`}
         onClick={() => setMenuOpen(!menuOpen)}
@@ -28,11 +28,11 @@ export default function FiltersMenu() {
       >
         {menuOpen ? <ArrowLeft className='text-2xl' /> : <ArrowRight className='text-2xl' />}
       </button>
-      <div className={`fixed top-0 left-0 h-full w-[250px] bg-white shadow-lg z-20 transform transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed top-0 left-0 h-full w-[250px] bg-[#F7F7F7] border-r border-[#D1D5DB] shadow-lg z-20 transform transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className='p-6'>
           <h2 className='text-lg font-bold mb-4'>Filters</h2>
           <label className='text-sm font-medium'>Filter by Status</label>
-          <select 
+          <select
             className='w-full px-3 py-2 text-gray-700 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mb-4'
             value={filterStatus}
             onChange={handleStatusChange}
@@ -64,18 +64,19 @@ export default function FiltersMenu() {
             <option value="last-7-days">Last 7 Days</option>
             <option value="this-month">This Month</option>
           </select>
-          <button 
-            className='w-full bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition'
+          <button
+            className='w-full bg-[#3B82F6] text-white px-4 py-2 rounded-lg shadow hover:bg-[#2563EB] transition'
             onClick={handleApplyFilters}
           >
             Apply Filters
           </button>
+
         </div>
       </div>
       {menuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-10 transition-opacity duration-300"
-          onClick={() => setMenuOpen(false)} 
+          onClick={() => setMenuOpen(false)}
         />
       )}
     </div>
