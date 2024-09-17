@@ -20,10 +20,7 @@ export default function TicketItem({ id, name, description, difficulty, status, 
       <h2 className='text-xl font-bold mb-2'>{name}</h2>
       <p className='text-gray-700 mb-4'>{description}</p>
       <p className='text-sm text-gray-500'>
-        Difficulty: 
-        <span className={`font-semibold ${difficulty === 'hard' ? 'text-[#EF4444]' : difficulty === 'intermediate' ? 'text-[#F59E0B]' : 'text-[#10B981]'}`}>
-          {difficulty}
-        </span>
+        Difficulty: <span className={`font-semibold ${difficulty === 'hard' ? 'text-[#EF4444]' : difficulty === 'intermediate' ? 'text-[#F59E0B]' : 'text-[#10B981]'}`}>{difficulty}</span>
       </p>
       <p className='text-sm text-gray-500'>
         Status: <span className={`font-semibold ${status === 'resolved' ? 'text-green-500' : 'text-yellow-500'}`}>{status}</span>
@@ -31,13 +28,13 @@ export default function TicketItem({ id, name, description, difficulty, status, 
       <p className='text-sm text-gray-500'>
         Created At: {dateStringFormatted} Hrs: {timeStringFormatted}
       </p>
-      
+
       {gifUrl && (
         <div className='flex justify-center items-center overflow-hidden h-48 w-full mt-4'>
           <img src={gifUrl} alt='Ticket GIF' className='w-full h-full object-cover rounded-lg' />
         </div>
       )}
-      
+
       <div className='absolute top-2 right-2 flex space-x-2'>
         <button
           onClick={toggleEdit}

@@ -65,11 +65,11 @@ const UpdateTicketForm = ({ ticket }) => {
         <option value='resolved'>Resolved</option>
       </select>
       <div className='flex space-x-4'>
-        <button className='w-full px-4 py-2 text-white bg-[#10B981] rounded hover:bg-[#059669] transition'>
+        <button
+          type='submit'
+          className='w-full px-4 py-2 text-white bg-[#10B981] rounded hover:bg-[#059669] transition'
+        >
           Update
-        </button>
-        <button className='w-full px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 transition'>
-          Cancel
         </button>
       </div>
     </form>
