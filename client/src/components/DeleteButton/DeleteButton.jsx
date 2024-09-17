@@ -1,5 +1,5 @@
-import { Trash2 } from 'lucide-react';
-import useTickets from '@/hooks/useTickets'
+import { Trash } from 'lucide-react';
+import useTickets from '@/hooks/useTickets';
 
 export default function DeleteButton({ id }) {
   const { handlerDeleteTicket } = useTickets();
@@ -7,10 +7,9 @@ export default function DeleteButton({ id }) {
   return (
     <button
       onClick={() => handlerDeleteTicket(id)}
-      className='p-2 text-[#EF4444] hover:text-[#B91C1C] absolute bottom-4 right-4'
+      className='p-2 rounded bg-red-200 hover:bg-red-300'
     >
-      <Trash2 className='inline-block w-6 h-6' />
+      <Trash className='inline-block w-6 h-6' />
     </button>
-
   );
 }

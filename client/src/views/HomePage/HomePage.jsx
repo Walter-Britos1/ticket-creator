@@ -17,7 +17,6 @@ export default function HomePage() {
         >
           New Ticket
         </button>
-
       </div>
       <TicketList />
       {isModalOpen && (

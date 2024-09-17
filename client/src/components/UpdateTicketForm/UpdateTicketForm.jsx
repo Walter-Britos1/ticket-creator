@@ -18,7 +18,6 @@ const UpdateTicketForm = ({ ticket }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await handlerUpdateTicket(ticket.id, formData);
-    // Aquí puedes cerrar el formulario o mostrar un mensaje de éxito si lo deseas.
   };
 
   return (
@@ -72,7 +71,6 @@ const UpdateTicketForm = ({ ticket }) => {
         <button className='w-full px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 transition'>
           Cancel
         </button>
-
       </div>
     </form>
   );

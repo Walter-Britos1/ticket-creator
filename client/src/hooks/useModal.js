@@ -3,15 +3,15 @@ import { useState } from 'react';
 const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showModalContent, setShowModalContent] = useState(false);
-  const [isCreating, setIsCreating] = useState(true); // Estado para diferenciar entre crear y editar
+  const [isCreating, setIsCreating] = useState(true); 
 
   const openModalForCreate = () => {
-    setIsCreating(true); // Configura para crear
+    setIsCreating(true); 
     openModal();
   };
 
   const openModalForEdit = () => {
-    setIsCreating(false); // Configura para editar
+    setIsCreating(false);
     openModal();
   };
 

@@ -22,12 +22,10 @@ const useTickets = () => {
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [noResults, setNoResults] = useState(false);
 
-  // React Hook Form setup
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  // Memoizar applyFilters para evitar cambios innecesarios
   const applyFilters = useCallback((tickets) => {
     let filtered = [...tickets];
 
@@ -65,7 +63,7 @@ const useTickets = () => {
     setNoResults(filtered.length === 0);
   }, [filters]);
 
-  // Memoizar handlerAllTickets para evitar recreaciones innecesarias
+
   const handlerAllTickets = useCallback(async () => {
     try {
       const { data } = await axios.get(GET_ALL_TICKETS_ENDPOINT);
@@ -82,7 +80,7 @@ const useTickets = () => {
       const updatedTickets = [...tickets, data];
       dispatch(setAllTicket(updatedTickets));
       applyFilters(updatedTickets);
-      reset(); // Reset the form after successful submission
+      reset();
       closeModel();
     } catch (error) {
       console.error('Error creating ticket:', error);
