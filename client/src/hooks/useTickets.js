@@ -10,14 +10,22 @@ import {
   DELETE_TICKET_ENDPOINT
 } from '@/config/api';
 import closeModel from '@/hooks/useModal';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from '@/utils/validation';
 
 const useTickets = () => {
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.tickets.tickets);
-  const filters = useSelector(getFilters); 
+  const filters = useSelector(getFilters);
 
   const [filteredTickets, setFilteredTickets] = useState([]);
-  const [noResults, setNoResults] = useState(false); 
+  const [noResults, setNoResults] = useState(false);
+
+  // React Hook Form setup
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   // Memoizar applyFilters para evitar cambios innecesarios
   const applyFilters = useCallback((tickets) => {
@@ -46,7 +54,7 @@ const useTickets = () => {
           filterDate.setMonth(now.getMonth());
           break;
         default:
-          filterDate.setFullYear(1900); 
+          filterDate.setFullYear(1900);
           break;
       }
 
@@ -54,7 +62,7 @@ const useTickets = () => {
     }
 
     setFilteredTickets(filtered);
-    setNoResults(filtered.length === 0); 
+    setNoResults(filtered.length === 0);
   }, [filters]);
 
   // Memoizar handlerAllTickets para evitar recreaciones innecesarias
@@ -62,7 +70,7 @@ const useTickets = () => {
     try {
       const { data } = await axios.get(GET_ALL_TICKETS_ENDPOINT);
       dispatch(setAllTicket(data));
-      applyFilters(data); 
+      applyFilters(data);
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +81,9 @@ const useTickets = () => {
       const { data } = await axios.post(CREATE_TICKET_ENDPOINT, formData);
       const updatedTickets = [...tickets, data];
       dispatch(setAllTicket(updatedTickets));
-      applyFilters(updatedTickets); 
+      applyFilters(updatedTickets);
+      reset(); // Reset the form after successful submission
+      closeModel();
     } catch (error) {
       console.error('Error creating ticket:', error);
     }
@@ -96,11 +106,8 @@ const useTickets = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await handlerCreateTicket(formData);
-    setFormData({ name: '', description: '', difficulty: '', status: '' });
-    closeModel();
+  const onSubmit = async (data) => {
+    await handlerCreateTicket(data);
   };
 
   const handlerUpdateTicket = async (id, updatedData) => {
@@ -115,33 +122,33 @@ const useTickets = () => {
       console.error('Error updating ticket:', error);
     }
   };
-  
 
   const handlerDeleteTicket = async (id) => {
     try {
       await axios.delete(`${DELETE_TICKET_ENDPOINT}${id}`);
       const updatedTickets = tickets.filter((ticket) => ticket.id !== id);
       dispatch(setAllTicket(updatedTickets));
-      applyFilters(updatedTickets); 
+      applyFilters(updatedTickets);
     } catch (error) {
       console.error('Error deleting ticket:', error);
     }
   };
 
   useEffect(() => {
-    applyFilters(tickets); 
+    applyFilters(tickets);
   }, [tickets, filters, applyFilters]);
 
   return {
-    tickets: filteredTickets, 
-    formData,
-    handleChange,
-    handleSubmit,
+    tickets: filteredTickets,
+    register,
+    handleSubmit: handleSubmit(onSubmit),
+    errors,
     handlerAllTickets,
     handlerCreateTicket,
     handlerUpdateTicket,
     handlerDeleteTicket,
-    noResults
+    noResults,
+    handleChange
   };
 };
 
