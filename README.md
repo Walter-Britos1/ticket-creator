@@ -37,7 +37,8 @@ cd ticket-creator
 
 ```
 
-Configuración de variables de entorno
+### Configuración de variables de entorno
+
 Crea un archivo .env en el directorio raíz de la capeta llamada server.
 
 Agrega las siguientes variables de entorno a tu archivo .env:
