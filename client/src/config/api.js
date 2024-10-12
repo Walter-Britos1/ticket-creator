@@ -1,4 +1,4 @@
-export const API_URL_BASE = 'postgresql://postgres:pRWOCmEiRuEZkZkrWevxzqKDMwDTVoHf@autorack.proxy.rlwy.net:40041/railway'
+export const API_URL_BASE = 'http://localhost:3000/'
 
 export const GET_ALL_TICKETS_ENDPOINT = API_URL_BASE + 'tickets'
 export const CREATE_TICKET_ENDPOINT = API_URL_BASE + 'ticket'
